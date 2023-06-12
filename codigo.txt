@@ -1,0 +1,39 @@
+  getDistance() {
+    var playerDistanceRef = database.ref("players/player" + this.index);
+    playerDistanceRef.on("value", data => {
+      var data = data.val();
+      this.positionX = data.positionX;
+      this.positionY = data.positionY;
+    });
+  }
+---------------------------------------------------------------------------------------------------
+       //Índice de la matriz
+       var index = 0;
+       for (var plr in allPlayers) {
+         //agrega 1 al índice para cada bucle
+         index = index + 1; 
+         //utilizar datos de la base de datos para mostrar los autos en las direcciones x e y
+         var x = allPlayers[plr].positionX;
+         var y = height - allPlayers[plr].positionY; 
+         cars[index - 1].position.x = x;
+         cars[index - 1].position.y = y;
+       }
+---------------------------------------------------------------------------------------------------------
+  handlePlayerControls() {
+    // manejar eventos de teclado
+    if (keyIsDown(UP_ARROW)) {
+      player.positionY += 10;
+      player.update();
+    }
+  }
+---------------------------------------------------------
+  update() {
+    var playerIndex = "players/player" + this.index;
+    database.ref(playerIndex).update({
+      positionX: this.positionX,
+      positionY: this.positionY
+    });
+  }
+-----------------------------------------------------------------
+
+
